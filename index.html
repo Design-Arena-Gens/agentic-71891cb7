@@ -1,0 +1,712 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>AURORA CHEAT</title>
+  <style>
+    :root {
+      --bg: #f0f9ff;
+      --panel: #e3f2fd;
+      --panel-glass: rgba(227, 242, 253, 0.6);
+      --accent: #bbdefb;
+      --success: #c8e6c9;
+      --warning: #ffccbc;
+      --shadow: 0 8px 32px rgba(31, 38, 135, 0.12);
+      --radius: 16px;
+      --blur: 12px;
+      --transition: 0.3s ease;
+      --title-grad: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+      --track-grad: linear-gradient(90deg, #4facfe 0%, #00f2fe 100%);
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+
+    body {
+      margin: 0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+      background: var(--bg);
+      color: #1a2b3c;
+      -webkit-font-smoothing: antialiased;
+      -moz-osx-font-smoothing: grayscale;
+    }
+
+    .cheat-wrap {
+      position: relative;
+      display: grid;
+      place-items: center;
+      padding: 48px 24px;
+      min-height: 100%;
+    }
+
+    .cheat-window {
+      width: min(1100px, 92vw);
+      background: var(--panel-glass);
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      border-right-color: rgba(255, 255, 255, 0.35);
+      border-bottom-color: rgba(255, 255, 255, 0.35);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      border-radius: calc(var(--radius) + 4px);
+      overflow: hidden;
+      transition: transform var(--transition), opacity var(--transition);
+    }
+
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      padding: 18px 22px;
+      background: linear-gradient(180deg, rgba(255,255,255,0.45), rgba(255,255,255,0.2));
+      border-bottom: 1px solid rgba(255,255,255,0.5);
+    }
+
+    .title {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+    }
+
+    .title h1 {
+      margin: 0;
+      font-size: clamp(18px, 3vw, 24px);
+      letter-spacing: 0.18em;
+      font-weight: 800;
+      text-transform: uppercase;
+      background: var(--title-grad);
+      background-size: 200% 200%;
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+      animation: shimmer 6s ease infinite;
+    }
+
+    @keyframes shimmer {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 6px 10px;
+      font-size: 12px;
+      color: #0b3954;
+      background: rgba(187, 222, 251, 0.85);
+      border: 1px solid rgba(255,255,255,0.6);
+      border-radius: 999px;
+      box-shadow: var(--shadow);
+      animation: pulse 2.2s ease-in-out infinite;
+    }
+
+    .badge-dot {
+      width: 8px; height: 8px;
+      background: #00c2ff;
+      border-radius: 50%;
+      box-shadow: 0 0 0 0 rgba(0, 194, 255, 0.6);
+      animation: dotPulse 1.6s ease-out infinite;
+    }
+
+    @keyframes pulse { 0%,100%{ transform: translateZ(0); } 50%{ transform: translateZ(0) scale(1.03); } }
+    @keyframes dotPulse { 0%{ box-shadow: 0 0 0 0 rgba(0, 194, 255, 0.6);} 70%{ box-shadow: 0 0 0 10px rgba(0, 194, 255, 0);} 100%{ box-shadow: 0 0 0 0 rgba(0, 194, 255, 0);} }
+
+    .header-controls {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .ctrl {
+      width: 34px; height: 34px;
+      display: grid; place-items: center;
+      border-radius: 10px;
+      background: rgba(255,255,255,0.65);
+      border: 1px solid rgba(255,255,255,0.7);
+      box-shadow: var(--shadow);
+      cursor: pointer;
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+      color: #0b3954;
+    }
+    .ctrl:hover { transform: translateY(-2px); background: rgba(255,255,255,0.9); }
+    .ctrl:active { transform: translateY(0); }
+
+    .content {
+      padding: 22px;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 18px;
+    }
+
+    @media (max-width: 980px) {
+      .grid { grid-template-columns: repeat(8, 1fr); }
+    }
+    @media (max-width: 640px) {
+      .grid { grid-template-columns: repeat(4, 1fr); }
+    }
+
+    .panel {
+      grid-column: span 6;
+      background: rgba(227, 242, 253, 0.55);
+      border: 1px solid rgba(255,255,255,0.55);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(var(--blur));
+      -webkit-backdrop-filter: blur(var(--blur));
+      padding: 18px;
+      transition: transform var(--transition), box-shadow var(--transition), background var(--transition);
+    }
+    .panel:hover { transform: translateY(-4px); background: rgba(227, 242, 253, 0.7); }
+
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 14px;
+    }
+
+    .panel-title {
+      display: flex; align-items: center; gap: 10px;
+      font-weight: 700;
+      letter-spacing: 0.06em;
+    }
+
+    .tag {
+      padding: 4px 8px; border-radius: 999px;
+      font-size: 12px; color: #0b3954; background: var(--accent);
+      border: 1px solid rgba(255,255,255,0.6);
+    }
+
+    .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; align-items: center; margin: 14px 0; }
+    .label { font-size: 13px; color: #28506a; opacity: 0.9; }
+    .value { font-feature-settings: "tnum" 1, "ss01" 1; font-variant-numeric: tabular-nums; }
+
+    /* Range slider (WebKit) */
+    .range {
+      --percent: 50%;
+      appearance: none; width: 100%; height: 12px; border-radius: 999px; outline: none; border: 1px solid rgba(255,255,255,0.7);
+      background: linear-gradient(90deg, #4facfe 0%, #00f2fe var(--percent), rgba(255,255,255,0.65) var(--percent));
+      box-shadow: inset 0 1px 2px rgba(31,38,135,0.08);
+      transition: background var(--transition), box-shadow var(--transition);
+    }
+    .range::-webkit-slider-thumb {
+      appearance: none; width: 22px; height: 22px; border-radius: 50%; background: white; border: 1px solid rgba(0,0,0,0.06);
+      box-shadow: var(--shadow);
+      transition: transform var(--transition);
+    }
+    .range:active::-webkit-slider-thumb { transform: scale(1.05); }
+    /* Firefox */
+    .range::-moz-range-track { height: 12px; border-radius: 999px; background: transparent; }
+    .range::-moz-range-progress { height: 12px; border-radius: 999px; background: var(--track-grad); }
+    .range::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: white; border: 1px solid rgba(0,0,0,0.06); box-shadow: var(--shadow); }
+
+    /* Toggle switch */
+    .switch {
+      --h: 24px; --w: 48px;
+      position: relative; width: var(--w); height: var(--h);
+    }
+    .switch input { position: absolute; inset: 0; width: 100%; height: 100%; opacity: 0; cursor: pointer; }
+    .track {
+      position: absolute; inset: 0; border-radius: 999px; background: rgba(255,255,255,0.75);
+      border: 1px solid rgba(255,255,255,0.7); box-shadow: inset 0 1px 2px rgba(31,38,135,0.08);
+      transition: background var(--transition), border-color var(--transition);
+    }
+    .thumb {
+      position: absolute; top: 50%; left: 3px; transform: translateY(-50%);
+      width: 18px; height: 18px; border-radius: 50%; background: white; box-shadow: var(--shadow);
+      transition: left var(--transition);
+    }
+    .switch input:checked + .track { background: var(--success); }
+    .switch input:checked + .track + .thumb { left: calc(var(--w) - 3px - 18px); }
+
+    /* Buttons */
+    .btn {
+      display: inline-flex; align-items: center; gap: 8px; cursor: pointer;
+      padding: 10px 14px; border-radius: 12px; border: 1px solid rgba(255,255,255,0.7);
+      background: rgba(255,255,255,0.7); color: #0b3954; box-shadow: var(--shadow);
+      transition: transform var(--transition), background var(--transition), box-shadow var(--transition);
+    }
+    .btn:hover { transform: translateY(-2px); background: rgba(255,255,255,0.92); }
+    .btn:active { transform: translateY(0); }
+    .btn.warn { background: var(--warning); }
+
+    /* Custom dropdown */
+    .dropdown { position: relative; }
+    .drop-btn { min-width: 180px; justify-content: space-between; }
+    .drop-list {
+      position: absolute; top: calc(100% + 8px); left: 0; right: 0; z-index: 10;
+      background: rgba(255,255,255,0.85); border: 1px solid rgba(255,255,255,0.7);
+      border-radius: 12px; box-shadow: var(--shadow); backdrop-filter: blur(var(--blur));
+      overflow: hidden; opacity: 0; pointer-events: none; transform: translateY(-6px);
+      transition: opacity var(--transition), transform var(--transition);
+    }
+    .dropdown[aria-expanded="true"] .drop-list { opacity: 1; pointer-events: auto; transform: translateY(0); }
+    .drop-item { display: flex; align-items: center; gap: 10px; padding: 10px 12px; cursor: pointer; transition: background var(--transition); }
+    .drop-item:hover { background: rgba(187,222,251,0.45); }
+
+    .muted { color: #40657f; opacity: 0.9; font-size: 13px; }
+
+    /* Minimized */
+    .cheat-window.minimized .content { display: none; }
+
+    /* Modal */
+    .modal-overlay {
+      position: fixed; inset: 0; display: none; place-items: center; background: rgba(10, 30, 50, 0.25);
+      backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .modal {
+      width: min(520px, 92vw);
+      background: rgba(255,255,255,0.85);
+      border: 1px solid rgba(255,255,255,0.75);
+      border-radius: 16px; box-shadow: var(--shadow); padding: 18px;
+    }
+    .modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px; }
+
+    /* Small helpers */
+    .icon { width: 18px; height: 18px; display: inline-block; }
+    .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+    .stack { display: grid; gap: 10px; }
+  </style>
+</head>
+<body>
+  <div class="cheat-wrap">
+    <div class="cheat-window" id="cheatWindow">
+      <div class="header">
+        <div class="title">
+          <h1>AURORA CHEAT</h1>
+          <span class="badge" title="Frames per second">
+            <span class="badge-dot"></span>
+            <span id="fps">-- FPS</span>
+          </span>
+        </div>
+        <div class="header-controls">
+          <button class="ctrl" id="btnMin" aria-label="Minimize" title="Minimize">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/></svg>
+          </button>
+          <button class="ctrl" id="btnSettings" aria-label="Settings" title="Settings">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06A1.65 1.65 0 0 0 15 19.4a1.65 1.65 0 0 0-1 .6 1.65 1.65 0 0 0-.33 1.82A2 2 0 1 1 9.4 23l.06-.06A1.65 1.65 0 0 0 9 21a1.65 1.65 0 0 0-1-.6A1.65 1.65 0 0 0 6.18 20l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.6 15a1.65 1.65 0 0 0-.6-1 1.65 1.65 0 0 0-1.82-.33A2 2 0 1 1 1 9.4l.06-.06A1.65 1.65 0 0 0 3 9a1.65 1.65 0 0 0 .6-1 1.65 1.65 0 0 0-.33-1.82L3.21 6.1a2 2 0 1 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 5a1.65 1.65 0 0 0 1-.6 1.65 1.65 0 0 0 .33-1.82A2 2 0 1 1 14.6 1l-.06.06A1.65 1.65 0 0 0 15 3c.39 0 .77.08 1.12.23.35.15.66.36.93.63.27.27.48.58.63.93.15.35.23.73.23 1.12 0 .39-.08.77-.23 1.12-.15.35-.36.66-.63.93-.27.27-.58.48-.93.63-.35.15-.73.23-1.12.23z"/></svg>
+          </button>
+          <button class="ctrl" id="btnClose" aria-label="Close" title="Close">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"/></svg>
+          </button>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="grid">
+          <!-- Aimbot Suite -->
+          <section class="panel" style="grid-column: span 6;">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="M2 12h4M18 12h4M12 2v4M12 18v4"/><circle cx="12" cy="12" r="2"/></svg>
+                <span>Aimbot Suite</span>
+              </div>
+              <span class="tag">Assist</span>
+            </div>
+
+            <div class="row">
+              <div class="label">Smoothness</div>
+              <div class="value" id="smoothVal">50%</div>
+            </div>
+            <input id="smooth" class="range" type="range" min="1" max="100" value="50" aria-label="Smoothness" />
+
+            <div class="row" style="margin-top:18px;">
+              <div class="label">FOV</div>
+              <div class="value" id="fovVal">35?</div>
+            </div>
+            <input id="fov" class="range" type="range" min="5" max="120" value="35" aria-label="Field of View" />
+
+            <div class="row" style="margin-top: 18px; grid-template-columns: 1fr auto;">
+              <div class="label">Target Bone</div>
+              <div class="dropdown" id="boneDropdown" aria-expanded="false">
+                <button class="btn drop-btn" id="boneBtn" aria-haspopup="listbox" aria-expanded="false">
+                  <span id="boneIcon">??</span>
+                  <span id="boneText">Head</span>
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg>
+                </button>
+                <div class="drop-list" role="listbox">
+                  <div class="drop-item" data-value="Head" data-icon="??" role="option">?? Head</div>
+                  <div class="drop-item" data-value="Chest" data-icon="??" role="option">?? Chest</div>
+                  <div class="drop-item" data-value="Pelvis" data-icon="??" role="option">?? Pelvis</div>
+                </div>
+              </div>
+            </div>
+
+            <div class="row-2" style="margin-top: 18px; align-items: start;">
+              <div class="stack">
+                <div class="label">Preview</div>
+                <canvas id="fovCanvas" width="220" height="220" style="width:220px;height:220px;border-radius:12px;background: rgba(255,255,255,0.6); border:1px solid rgba(255,255,255,0.7);"></canvas>
+              </div>
+              <div class="stack">
+                <div class="label">Options</div>
+                <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                  <div class="switch">
+                    <input id="aimToggle" type="checkbox" checked />
+                    <div class="track"></div>
+                    <div class="thumb"></div>
+                  </div>
+                  <span class="muted">Enable Aimbot</span>
+                </label>
+                <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                  <div class="switch">
+                    <input id="rcsToggle" type="checkbox" />
+                    <div class="track"></div>
+                    <div class="thumb"></div>
+                  </div>
+                  <span class="muted">Recoil Control</span>
+                </label>
+                <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                  <div class="switch">
+                    <input id="visCheck" type="checkbox" />
+                    <div class="track"></div>
+                    <div class="thumb"></div>
+                  </div>
+                  <span class="muted">Visibility Check</span>
+                </label>
+              </div>
+            </div>
+          </section>
+
+          <!-- ESP Visualizer -->
+          <section class="panel" style="grid-column: span 6;">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
+                <span>ESP Visualizer</span>
+              </div>
+              <span class="tag">Awareness</span>
+            </div>
+
+            <div class="stack">
+              <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                <div class="switch"><input type="checkbox" checked><div class="track"></div><div class="thumb"></div></div>
+                <span class="muted">Show Boxes</span>
+              </label>
+              <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                <div class="switch"><input type="checkbox" checked><div class="track"></div><div class="thumb"></div></div>
+                <span class="muted">Show Names</span>
+              </label>
+              <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                <div class="switch"><input type="checkbox"><div class="track"></div><div class="thumb"></div></div>
+                <span class="muted">Health Bars</span>
+              </label>
+              <div class="row">
+                <div class="label">Max Distance</div>
+                <div class="value" id="espDistVal">150m</div>
+              </div>
+              <input id="espDist" class="range" type="range" min="50" max="500" value="150" />
+            </div>
+          </section>
+
+          <!-- Movement Assist -->
+          <section class="panel" style="grid-column: span 6;">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 3L6 21M18 3l-3 18"/></svg>
+                <span>Movement Assist</span>
+              </div>
+              <span class="tag">Mobility</span>
+            </div>
+
+            <div class="row">
+              <div class="label">Bunnyhop</div>
+              <div class="value" id="bhopVal">60%</div>
+            </div>
+            <input id="bhop" class="range" type="range" min="0" max="100" value="60" />
+
+            <div class="row" style="margin-top: 14px;">
+              <div class="label">Strafe Assist</div>
+              <div class="value" id="strafeVal">40%</div>
+            </div>
+            <input id="strafe" class="range" type="range" min="0" max="100" value="40" />
+
+            <div class="stack" style="margin-top: 12px;">
+              <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                <div class="switch"><input type="checkbox" checked><div class="track"></div><div class="thumb"></div></div>
+                <span class="muted">Auto-Sprint</span>
+              </label>
+              <label class="row" style="grid-template-columns:auto 1fr; gap:10px; align-items:center;">
+                <div class="switch"><input type="checkbox"><div class="track"></div><div class="thumb"></div></div>
+                <span class="muted">Slide Cancel</span>
+              </label>
+            </div>
+          </section>
+
+          <!-- Misc Utilities -->
+          <section class="panel" style="grid-column: span 6;">
+            <div class="panel-header">
+              <div class="panel-title">
+                <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 2v20M2 12h20"/></svg>
+                <span>Misc Utilities</span>
+              </div>
+              <span class="tag">System</span>
+            </div>
+
+            <div class="stack">
+              <div class="row" style="grid-template-columns: auto auto auto; gap: 10px;">
+                <button class="btn" id="btnSave">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 21H5a2 2 0 0 1-2-2V7a2 2 0 0 1 2-2h11l5 5v9a2 2 0 0 1-2 2z"/><path d="M17 21v-8H7v8"/><path d="M7 3v4h8"/></svg>
+                  Save Config
+                </button>
+                <button class="btn" id="btnLoad">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/></svg>
+                  Load Config
+                </button>
+                <button class="btn warn" id="btnPanic" title="Disable all">
+                  <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"/><path d="M12 9v4"/><path d="M12 17h.01"/></svg>
+                  Panic
+                </button>
+              </div>
+              <div class="muted">Use Panic to instantly disable all features. Saved configs persist in local storage.</div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Reopen button -->
+    <button class="btn" id="btnReopen" style="position: fixed; right: 16px; bottom: 16px; display: none;">
+      <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><path d="M7 10l5 5 5-5"/></svg>
+      Open Aurora
+    </button>
+  </div>
+
+  <!-- Settings Modal -->
+  <div class="modal-overlay" id="settingsModal" aria-hidden="true">
+    <div class="modal" role="dialog" aria-modal="true" aria-labelledby="settingsTitle">
+      <div class="panel-header" style="margin: -6px 0 10px;">
+        <div class="panel-title"><span id="settingsTitle">Settings</span></div>
+        <span class="tag">App</span>
+      </div>
+      <div class="stack">
+        <label class="row" style="grid-template-columns: auto 1fr; gap: 12px; align-items: center;">
+          <div class="switch"><input id="settingAnimations" type="checkbox" checked><div class="track"></div><div class="thumb"></div></div>
+          <span class="muted">Enable micro-animations</span>
+        </label>
+        <label class="row" style="grid-template-columns: auto 1fr; gap: 12px; align-items: center;">
+          <div class="switch"><input id="settingGlass" type="checkbox" checked><div class="track"></div><div class="thumb"></div></div>
+          <span class="muted">Enable glass blur</span>
+        </label>
+      </div>
+      <div class="modal-actions">
+        <button class="btn" id="btnCloseSettings">Close</button>
+        <button class="btn" id="btnApplySettings">Apply</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    (function() {
+      const qs = (s, p=document) => p.querySelector(s);
+      const qsa = (s, p=document) => Array.from(p.querySelectorAll(s));
+
+      // FPS counter
+      const fpsEl = qs('#fps');
+      let last = performance.now();
+      let frames = 0; let acc = 0;
+      function loop(now) {
+        const dt = now - last; last = now; frames++; acc += dt;
+        if (acc >= 500) { // update twice per second
+          const fps = Math.round(frames * 1000 / acc);
+          fpsEl.textContent = fps + ' FPS';
+          frames = 0; acc = 0;
+        }
+        requestAnimationFrame(loop);
+      }
+      requestAnimationFrame(loop);
+
+      // Header controls
+      const win = qs('#cheatWindow');
+      qs('#btnMin').addEventListener('click', () => {
+        win.classList.toggle('minimized');
+      });
+      const settingsModal = qs('#settingsModal');
+      const openSettings = () => { settingsModal.style.display = 'grid'; settingsModal.setAttribute('aria-hidden', 'false'); };
+      const closeSettings = () => { settingsModal.style.display = 'none'; settingsModal.setAttribute('aria-hidden', 'true'); };
+      qs('#btnSettings').addEventListener('click', openSettings);
+      qs('#btnCloseSettings').addEventListener('click', closeSettings);
+      settingsModal.addEventListener('click', (e) => { if (e.target === settingsModal) closeSettings(); });
+
+      const reopen = qs('#btnReopen');
+      qs('#btnClose').addEventListener('click', () => {
+        win.style.opacity = '0';
+        win.style.transform = 'scale(0.98)';
+        setTimeout(() => { win.style.display = 'none'; reopen.style.display = 'inline-flex'; }, 250);
+      });
+      reopen.addEventListener('click', () => {
+        win.style.display = 'block';
+        requestAnimationFrame(() => { win.style.opacity = '1'; win.style.transform = 'none'; });
+        reopen.style.display = 'none';
+      });
+
+      // Range helpers (value text + gradient fill)
+      function updateRange(range, valEl, unit) {
+        const v = Number(range.value);
+        const min = Number(range.min), max = Number(range.max);
+        const pct = ((v - min) / (max - min)) * 100;
+        range.style.setProperty('--percent', pct + '%');
+        if (valEl) valEl.textContent = unit ? (v + unit) : (v + '%');
+      }
+      const pairs = [
+        ['#smooth', '#smoothVal', '%'],
+        ['#fov', '#fovVal', '?'],
+        ['#espDist', '#espDistVal', 'm'],
+        ['#bhop', '#bhopVal', '%'],
+        ['#strafe', '#strafeVal', '%'],
+      ];
+      pairs.forEach(([ri, vi, unit]) => {
+        const r = qs(ri); const v = vi ? qs(vi) : null;
+        updateRange(r, v, unit);
+        r.addEventListener('input', () => updateRange(r, v, unit));
+      });
+
+      // FOV canvas visualization
+      const fovRange = qs('#fov');
+      const smoothRange = qs('#smooth');
+      const canvas = qs('#fovCanvas');
+      const ctx = canvas.getContext('2d');
+
+      function drawFov() {
+        const dpr = window.devicePixelRatio || 1;
+        const cssW = canvas.clientWidth; const cssH = canvas.clientHeight;
+        if (canvas.width !== Math.round(cssW * dpr) || canvas.height !== Math.round(cssH * dpr)) {
+          canvas.width = Math.round(cssW * dpr);
+          canvas.height = Math.round(cssH * dpr);
+        }
+        const w = canvas.width, h = canvas.height;
+        ctx.clearRect(0, 0, w, h);
+
+        // Background grid
+        ctx.save();
+        ctx.scale(dpr, dpr);
+        ctx.globalAlpha = 0.4;
+        ctx.strokeStyle = 'rgba(187, 222, 251, 0.7)';
+        for (let i = 20; i < cssW; i += 20) { ctx.beginPath(); ctx.moveTo(i, 0); ctx.lineTo(i, cssH); ctx.stroke(); }
+        for (let j = 20; j < cssH; j += 20) { ctx.beginPath(); ctx.moveTo(0, j); ctx.lineTo(cssW, j); ctx.stroke(); }
+        ctx.restore();
+
+        // FOV circle
+        const fov = Number(fovRange.value);
+        // map 5..120 deg to radius 20..(min/2 - 16)
+        const maxR = Math.min(canvas.width, canvas.height) / 2 - 16 * (window.devicePixelRatio || 1);
+        const r = ((fov - 5) / (120 - 5)) * (maxR - 20) + 20;
+        const cx = canvas.width / 2, cy = canvas.height / 2;
+
+        // outer glow
+        const grad = ctx.createRadialGradient(cx, cy, r * 0.2, cx, cy, r);
+        grad.addColorStop(0, 'rgba(79, 172, 254, 0.25)');
+        grad.addColorStop(1, 'rgba(0, 242, 254, 0.05)');
+        ctx.fillStyle = grad; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+
+        // ring
+        ctx.lineWidth = Math.max(2, (window.devicePixelRatio || 1) * 2);
+        ctx.strokeStyle = '#00c2ff';
+        ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+
+        // center dot strength shows smoothness
+        const smooth = Number(smoothRange.value); // 1..100
+        const alpha = 0.3 + (1 - smooth / 100) * 0.5; // higher smooth -> lighter
+        ctx.fillStyle = 'rgba(0, 194, 255,' + alpha.toFixed(3) + ')';
+        ctx.beginPath(); ctx.arc(cx, cy, 6 * (window.devicePixelRatio || 1), 0, Math.PI * 2); ctx.fill();
+      }
+      drawFov();
+      fovRange.addEventListener('input', drawFov);
+      smoothRange.addEventListener('input', drawFov);
+      window.addEventListener('resize', drawFov);
+
+      // Custom dropdown
+      const dd = qs('#boneDropdown');
+      const btn = qs('#boneBtn');
+      const txt = qs('#boneText');
+      const icon = qs('#boneIcon');
+      btn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        const ex = dd.getAttribute('aria-expanded') === 'true';
+        dd.setAttribute('aria-expanded', String(!ex));
+        btn.setAttribute('aria-expanded', String(!ex));
+      });
+      qsa('.drop-item', dd).forEach(item => {
+        item.addEventListener('click', () => {
+          const val = item.getAttribute('data-value');
+          const ic = item.getAttribute('data-icon');
+          txt.textContent = val; icon.textContent = ic;
+          dd.setAttribute('aria-expanded', 'false');
+          btn.setAttribute('aria-expanded', 'false');
+        });
+      });
+      document.addEventListener('click', (e) => {
+        if (!dd.contains(e.target)) { dd.setAttribute('aria-expanded', 'false'); btn.setAttribute('aria-expanded', 'false'); }
+      });
+
+      // Config persistence (Save/Load)
+      const configKeys = ['smooth','fov','espDist','bhop','strafe','aimToggle','rcsToggle','visCheck'];
+      function readConfig() {
+        try { return JSON.parse(localStorage.getItem('aurora-config') || '{}'); } catch { return {}; }
+      }
+      function writeConfig(cfg) {
+        try { localStorage.setItem('aurora-config', JSON.stringify(cfg)); } catch {}
+      }
+      function collectConfig() {
+        const cfg = {};
+        configKeys.forEach(k => {
+          const el = qs('#' + k);
+          if (!el) return;
+          if (el.type === 'checkbox') cfg[k] = !!el.checked; else cfg[k] = el.value;
+        });
+        cfg.bone = txt.textContent;
+        return cfg;
+      }
+      function applyConfig(cfg) {
+        if (!cfg) return;
+        configKeys.forEach(k => {
+          const el = qs('#' + k);
+          if (!el || cfg[k] === undefined) return;
+          if (el.type === 'checkbox') el.checked = !!cfg[k]; else el.value = cfg[k];
+          if (el.classList.contains('range')) {
+            const valEl = { smooth: '#smoothVal', fov: '#fovVal', espDist: '#espDistVal', bhop: '#bhopVal', strafe: '#strafeVal' }[k];
+            updateRange(el, valEl ? qs(valEl) : null, { smooth: '%', fov: '?', espDist: 'm', bhop: '%', strafe: '%' }[k]);
+          }
+        });
+        if (cfg.bone) { txt.textContent = cfg.bone; icon.textContent = cfg.bone === 'Head' ? '??' : cfg.bone === 'Chest' ? '??' : '??'; }
+        drawFov();
+      }
+
+      // Buttons
+      qs('#btnSave').addEventListener('click', () => { writeConfig(collectConfig()); flashButton('#btnSave'); });
+      qs('#btnLoad').addEventListener('click', () => { applyConfig(readConfig()); flashButton('#btnLoad'); });
+      qs('#btnPanic').addEventListener('click', () => {
+        // Disable all toggles
+        qsa('.switch input').forEach(inp => { inp.checked = false; });
+        drawFov();
+      });
+
+      function flashButton(sel) {
+        const b = qs(sel);
+        const old = b.style.transform;
+        b.style.transform = 'translateY(-2px) scale(1.02)';
+        setTimeout(() => { b.style.transform = old || 'translateY(0)'; }, 180);
+      }
+
+      // Settings application
+      qs('#btnApplySettings').addEventListener('click', () => {
+        const enableAnim = qs('#settingAnimations').checked;
+        const enableGlass = qs('#settingGlass').checked;
+        document.documentElement.style.setProperty('--transition', enableAnim ? '0.3s ease' : '0s');
+        const blur = enableGlass ? '12px' : '0px';
+        document.documentElement.style.setProperty('--blur', blur);
+        closeSettings();
+      });
+
+      // Initial config load
+      applyConfig(readConfig());
+    })();
+  </script>
+</body>
+</html>
